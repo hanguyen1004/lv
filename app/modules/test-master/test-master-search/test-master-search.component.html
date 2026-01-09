@@ -1,0 +1,72 @@
+<div *ngIf="!isDesktop" style="position: relative;">
+    <div class="bg-white d-flex justify-content-between align-items-center" style="padding: 8px 20px 10px 20px;">
+        <h5 class="fw-bold m-0" id="testMasterTitle">Test Master Search</h5>
+    </div>
+
+    <div style="padding: 16px; position: relative;" class="d-flex w-100 flex-column">
+        <p style="font-size: 14px;">Search for a test by Test Name or Test Code : </p>
+        <form class="w-100">
+            <div class="w-100 row-no-gutters">
+                <div class="'w-100 pb-3">
+                    <app-textfield classWrapperName="p-0" [type]="'text'" [placeHolder]="'Test Name'"
+                        [isRequired]="false" [label]="'Test Name'" [ (ngModel) ]="testName" name="testName"
+                        [maxLength]="100"></app-textfield>
+                </div>
+                <div class="'w-100 pb-3">
+                    <app-textfield classWrapperName="p-0" [type]="'text'" [placeHolder]="'Test Code'"
+                        [isRequired]="false" [label]="'Test Code'" [ (ngModel) ]="testCode" name="testCode"
+                        [maxLength]="20"></app-textfield>
+                </div>
+            </div>
+            <div class="row no-gutters p-0">
+                <div class="col col-6">
+                    <app-button text="Clear" [background]="'#128474'" [height]="'44px'" [outlined]="true"
+                        className="previous-btn" [width]="'100%'" [id]="'btnClear'" (click)="onClear()" />
+                </div>
+                <div class="col col-6">
+                    <app-button text="Apply" [background]="'#128474'" [width]="'100%'" [id]="'btnApply'"
+                        (click)="onSearch()" />
+                </div>
+            </div>
+            <p *ngIf="errorMessage" style="color:#F15C61; margin-top: 20px; font-size: 14px; margin-bottom: 0;">
+                {{ errorMessage }}
+            </p>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="isDesktop">
+    <div>
+        <header class="bg-white d-flex align-items-center header-title justify-content-between">
+            <div id="testMasterTitle">Test Master Search</div>
+        </header>
+    </div>
+
+    <div style="height: auto; width: auto; margin: 24px; padding: 20px; border-radius: 5px;"
+        class="bg-white d-flex flex-column">
+        <p style="font-size: 16px; margin-bottom: 20px;">Search for a test by Test Name or Test Code : </p>
+        <form>
+            <div class="filter-search-query-wrapper-desktop">
+                <div class="form-group full-screen ">
+                    <app-textfield classWrapperName="p-0" [type]="'text'" [placeHolder]="'Test Name'"
+                        [isRequired]="false" [label]="'Test Name'" [ (ngModel) ]="testName" name="testName"
+                        [maxLength]="100"></app-textfield>
+                </div>
+                <div class="form-group full-screen ">
+                    <app-textfield classWrapperName="p-0" [type]="'text'" [placeHolder]="'Test Code'"
+                        [isRequired]="false" [label]="'Test Code'" [(ngModel) ]="testCode" name="testCode"
+                        [maxLength]="20"></app-textfield>
+                </div>
+
+                <app-button text="Search" [background]="'#128474'" [width]="isDesktop? '149px' : '100%'"
+                    [id]="'btnSearch'" (click)="onSearch()" />
+                <app-button text="Clear" [background]="'#128474'" [height]="'44px'"
+                    [width]="isDesktop? '149px' : '100%'" [outlined]="true" className="previous-btn" [id]="'btnClear'"
+                    (click)="onClear()" />
+            </div>
+            <p *ngIf="errorMessage" style="color:#F15C61; margin-top: 20px; font-size: 16px; margin-bottom: 0;">
+                {{ errorMessage }}
+            </p>
+        </form>
+    </div>
+</div>
