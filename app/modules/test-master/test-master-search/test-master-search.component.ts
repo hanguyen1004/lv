@@ -115,20 +115,14 @@ export class TestMasterSearchComponent implements OnInit, OnDestroy {
         this.showValidationError = false;
         this.hasSearched = true;
         this.page = 1;
-        
+
         // Update URL with search params
-        this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: {
-                testName: this.searchForm.value.testName || null,
-                testCode: this.searchForm.value.testCode || null,
-                page: this.page
-            },
-            queryParamsHandling: 'merge'
-        });
-        
+        this.updateUrlParams(true);
+
         this.generateMockData();
     }
+
+
 
     onClear(): void {
         this.searchForm.reset();
@@ -139,12 +133,37 @@ export class TestMasterSearchComponent implements OnInit, OnDestroy {
         this.searchResults = [];
         this.totalItems = 0;
         this.page = 1;
-        
+
         // Clear URL params
-        this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: {}
-        });
+        this.updateUrlParams();
+    }
+
+    private updateUrlParams(isSearchAction: boolean = false): void {
+        const queryParams: any = {};
+
+        // Only include params if form has values
+        if (!isSearchAction) {
+            // Clear all params
+            this.router.navigate([], {
+                relativeTo: this.route,
+                queryParams: {}
+            });
+        } else {
+            // Include search params
+            Object.keys(this.searchForm.value).forEach((key) => {
+                const value = this.searchForm.value[key];
+                if (value) {
+                    queryParams[key] = value;
+                }
+            });
+            queryParams.page = this.page;
+
+            this.router.navigate([], {
+                relativeTo: this.route,
+                queryParams,
+                queryParamsHandling: 'merge'
+            });
+        }
     }
 
     onPrepend(): void {
@@ -185,7 +204,7 @@ export class TestMasterSearchComponent implements OnInit, OnDestroy {
         } else {
             this.page--;
         }
-        
+
         // Update URL with new page number
         this.router.navigate([], {
             relativeTo: this.route,
